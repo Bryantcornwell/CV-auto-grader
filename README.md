@@ -1,4 +1,5 @@
-# a1
+# Assignment #1 Report
+Group Members: Deepak Duggirala, Li Sun, Bryant Cornwell
 
 Replace this with your report! 
 
@@ -8,7 +9,7 @@ to help you see how to do basic image operations.
 To run the sample python code, just type:
 
 ```
-python3 sample.py example.jpg
+python3 grade.py form.jpg output.txt
 ```
 
 
