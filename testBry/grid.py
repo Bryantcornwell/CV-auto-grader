@@ -1,5 +1,5 @@
 # Import the Image and ImageFilter classes from PIL (Pillow)
-from PIL import Image
+from PIL import Image, ImageOps
 from PIL import ImageFilter
 import sys
 import numpy as np
@@ -9,24 +9,25 @@ def convolution(image, kernel):
     kernel = np.flipud(kernel)
     kernel = np.fliplr(kernel)
     # Get the amount edge pixels that will be undetermined in the final image.
-    ker_radius = kernel.shape[0] // 2
+    ker_rad1 = kernel.shape[0] // 2
+    ker_rad2 = kernel.shape[1] // 2
     # Create a new image to transfer the convolved image pixels into from the original image.
     # Reference: https://pillow.readthedocs.io/en/stable/reference/Image.html
-    new_image = Image.new("RGB", (image.width, image.height), color=0)
-    for x in range(ker_radius, image.width - ker_radius):
-        for y in range(ker_radius, image.height - ker_radius):
+    new_image = Image.new("RGB", (image.width + 2 * ker_rad1, image.height + 2 * ker_rad2), color=0)
+    for x in range(ker_rad1, image.width - ker_rad1):
+        for y in range(ker_rad2, image.height - ker_rad2):
             # For each inner pixel, calculate the new RGB values for the resulting pixel.
             mt_list = [0, 0, 0]
-            for w in range(x - ker_radius, x + ker_radius + 1):
-                for h in range(y - ker_radius, y + ker_radius + 1):
+            for w in range(x - ker_rad1, x + ker_rad1 + 1):
+                for h in range(y - ker_rad2, y + ker_rad2 + 1):
                     p = image.getpixel((w, h))
                     # Calculate the value for each RGB dimension per pixel.
                     for i in range(3):
-                        mt_list[i] += p[i] * kernel[h - y + ker_radius, w - x + ker_radius]
+                        mt_list[i] += p[i] * kernel[w - x + ker_rad1, h - y + ker_rad2]
             new_image.putpixel((x, y), tuple([int(n) for n in mt_list]))
     # Crops out the undetermined edge pixels from the original image. Reference: Image.crop() from PIL
     # Reference: https://pillow.readthedocs.io/en/stable/reference/Image.html
-    new_image = new_image.crop((ker_radius, ker_radius, new_image.width - ker_radius, new_image.height - ker_radius))
+    new_image = new_image.crop((ker_rad1, ker_rad2, new_image.width - ker_rad1, new_image.height - ker_rad2))
     return new_image
 
 
@@ -51,15 +52,15 @@ if __name__ == '__main__':
     for x in range(im.width):
         for y in range(im.height):
             p = gray_im.getpixel((x, y))
-            if p < 50:
+            if p < 150:
                 (R, G, B) = (255, 255, 0)
                 color_im.putpixel((x, y), (R, G, B))
             else:
                 color_im.putpixel((x, y), (0, 0, 0))
     color_im.show()
-
+    color_im = color_im.resize((color_im.width // 5, color_im.height // 5))
     # Need to create a horizontal or vertical line based on the yellow pixels
-
+    """
     kern = np.array([[0, 1, 0],
                      [0, 1, 0],
                      [0, 1, 0],
@@ -67,17 +68,20 @@ if __name__ == '__main__':
                      [0, 1, 0],
                      [0, 1, 0],
                      [0, 1, 0]])
+    """
+    kern = np.array([[1] for i in range(51)]) / 51
 
     color_im = convolution(color_im, kern)
 
-    for x in range(im.width):
-        for y in range(im.height):
+    for x in range(color_im.width):
+        for y in range(color_im.height):
             p = color_im.getpixel((x, y))
             if p[0] > 5 and p[1] > 5:
                 (R, G, B) = (255, 255, 0)
                 color_im.putpixel((x, y), (R, G, B))
             else:
                 color_im.putpixel((x, y), (0, 0, 0))
+
     color_im.show()
     print('Done')
 
