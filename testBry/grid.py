@@ -3,6 +3,7 @@ from PIL import Image, ImageOps
 from PIL import ImageFilter
 import sys
 import numpy as np
+import math
 
 def convolution(image, kernel):
     # Flip kernel horizontally and vertically for convolution.
@@ -84,6 +85,28 @@ if __name__ == '__main__':
 
     color_im.show()
     print('Done')
+
+    # Hough Transform
+    # Reference: https://en.wikipedia.org/wiki/Hough_transform#Kernel-based_Hough_transform_(KHT)
+
+    # Parameter to decide how many equally spaced points for linspace()
+    theta_max = 180
+    theta = np.linspace(0, np.pi, theta_max)
+    r_max = int(np.sqrt(im.shape[0] ** 2 + im.shape[1] ** 2)) + 1
+    hough = np.zeros((theta_max, r_max))
+    for x in range(gray_im.width):
+        for y in range(gray_im.height):
+            p = gray_im.getpixel((x, y))
+            if p > 5:
+                # This is a pixel with high intensity, so we want to perform hough transform on it
+                for t in theta:
+                    r = x * math.cos(t) + y * math.sin(t)
+                    hough[t, r] += 1
+            else:
+                # Ignore pixel and move on
+                pass
+    # x = r * math.cos(theta)
+    # y = r * math.sin(theta)
 
     # box = [0, 0, 0, 1, 1, 1, 0, 0, 0]
     # test = color_im.filter(ImageFilter.Kernel((3, 3), box, sum(box)))
