@@ -57,6 +57,6 @@ if __name__ == '__main__':
     #bi_im.show()
 
     # Paste the QR/bar code on image and save.
-    im.paste(bi_im, (int(10 * im.width / 11), im.height - 100))
+    im.paste(bi_im, (int(11 * im.width / 13), int(19 * im.height / 20)))
     im.save("inject_"+sys.argv[1])
     print("Injected image saved as", '"inject_'+sys.argv[1]+'".')
