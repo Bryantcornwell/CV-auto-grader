@@ -35,38 +35,34 @@ if __name__ == '__main__':
                 pixel_list.append((x, y))
             else:
                 pass
-    print(pixel_list)
 
     # Use the location of the first point to determine the encoded matrix.
     start_h = (pixel_list[0][1] - 4)
     start_w = (pixel_list[0][0] + 2)
     mat_width = (pixel_list[1][0] - 11) - start_w
     mat_height = (pixel_list[4][1] + 5) - start_h
-    # Convert the 2x2 pixel matrix to a single pixel matrix.
+
+    # Convert the 2x2 pixel matrix to a single pixel matrix and extract values.
     mat_values = []
-    
-    # Extract values from the 2x2 superpixel grid.
     for h in range(start_h, mat_height + start_h, 2):
         for w in range(start_w, mat_width+start_w, 2):
             if test_space.getpixel((w, h)) == 255:
                 test_space.putpixel((w, h), 1)
             mat_values.append(str(test_space.getpixel((w, h))))
-    print(mat_values)
 
     # In order to use the dictionary to decode the answers, every five list values need to be combined.
     binary_list = []
     for i in range(85):
         binary_list.append("".join(mat_values[0+5*i:5 + 5*i]))
-    print(binary_list)
+
     # Decode the answers using the dictionary and prepare the numbered output for each answer.
     answer_list = []
-    print(answer_dict[binary_list[0]])
     count = 1
     for value in binary_list:
         key = answer_dict[value]
         answer_list.append(str(count)+" "+key)
         count += 1
-    print(answer_list)
+
     # Create and save a text file for the answer key output.
     with open(sys.argv[2], 'w') as txt_file:
         txt_file.write("\n".join(answer_list))
