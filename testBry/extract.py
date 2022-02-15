@@ -1,6 +1,5 @@
 from PIL import Image
 import sys
-import numpy as np
 
 
 if __name__ == '__main__':
@@ -14,8 +13,6 @@ if __name__ == '__main__':
                    '10011': 'ACE', '10100': 'ADE', '10101': 'BCD', '10110': 'BCE', '10111': 'BDE', '11000': 'CDE',
                    '11001': 'ABCD', '11010': 'ABCE', '11011': 'ABDE', '11100': 'ACDE', '11101': 'BCDE',
                    '11110': 'ABCDE'}
-    #kernel = np.zeros((12, 10), dtype=np.uint8)
-    #(kernel[4:8, 3:7], kernel[5:7, 4:6]) = (1, 0)
 
     # Determine the area of the form that the QR code should be located within.
     win_width, win_height = int(11 * im.width / 13), int(19 * im.height / 20)
@@ -23,9 +20,9 @@ if __name__ == '__main__':
     # Determine the location of the QR code by comparing lists of pixel values
     check_list = [0, 0, 0, 255, 0, 0, 255, 0, 0, 0]
     pixel_list = []
-    for x in range(test_space.width):
+    for y in range(test_space.height):
         a_list = []
-        for y in range(test_space.height):
+        for x in range(test_space.width):
             p = test_space.getpixel((x, y))
             if p < 150:
                 p = 0
@@ -38,29 +35,24 @@ if __name__ == '__main__':
                 pixel_list.append((x, y))
             else:
                 pass
-    #print(pixel_list)
-    #print((pixel_list[0][1] + 12, pixel_list[0][0] - 14))
-    #print((pixel_list[0][1] + 12, pixel_list[0][0] + 19))
-    #print((pixel_list[0][1] + 61, pixel_list[0][0] - 14))
-    #print((pixel_list[0][1] + 61, pixel_list[0][0] + 19))
-    #test_space.putpixel((pixel_list[0][1] + 12, pixel_list[0][0] - 14), 150)
-    #test_space.putpixel((pixel_list[0][1] + 12, pixel_list[0][0] + 19), 150)
-    #test_space.putpixel((pixel_list[0][1] + 61, pixel_list[0][0] - 14), 150)
-    #test_space.putpixel((pixel_list[0][1] + 61, pixel_list[0][0] + 19), 150)
-    #test_space.show()
-    #print(test_space.getpixel((pixel_list[0][1] + 12, pixel_list[0][0] - 14)))
+    print(pixel_list)
+
     # Use the location of the first point to determine the encoded matrix.
-    mat_width = (pixel_list[0][1] + 61) - (pixel_list[0][1] + 12)
-    mat_height = (pixel_list[0][1] + 19) - (pixel_list[0][1] - 14)
+    start_h = (pixel_list[0][1] - 4)
+    start_w = (pixel_list[0][0] + 2)
+    mat_width = (pixel_list[1][0] - 11) - start_w
+    mat_height = (pixel_list[4][1] + 5) - start_h
     # Convert the 2x2 pixel matrix to a single pixel matrix.
     mat_values = []
-    for h in range(16, mat_height + 16, 2):
-        for w in range(37, mat_width+37, 2):
+    
+    # Extract values from the 2x2 superpixel grid.
+    for h in range(start_h, mat_height + start_h, 2):
+        for w in range(start_w, mat_width+start_w, 2):
             if test_space.getpixel((w, h)) == 255:
                 test_space.putpixel((w, h), 1)
-            #test_space.putpixel((w, h), 150)
             mat_values.append(str(test_space.getpixel((w, h))))
     print(mat_values)
+
     # In order to use the dictionary to decode the answers, every five list values need to be combined.
     binary_list = []
     for i in range(85):
