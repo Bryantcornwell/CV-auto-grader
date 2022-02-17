@@ -70,7 +70,7 @@ if __name__ == '__main__':
                      [0, 1, 0],
                      [0, 1, 0]])
     """
-    kern = np.array([[1] for i in range(51)]) / 51
+    kern = np.array([[1] for i in range(51)]).transpose() / 51
 
     color_im = convolution(color_im, kern)
 
@@ -85,7 +85,7 @@ if __name__ == '__main__':
 
     color_im.show()
     print('Done')
-
+    """
     # Hough Transform
     # Reference: https://en.wikipedia.org/wiki/Hough_transform#Kernel-based_Hough_transform_(KHT)
 
@@ -97,7 +97,7 @@ if __name__ == '__main__':
     for x in range(gray_im.width):
         for y in range(gray_im.height):
             p = gray_im.getpixel((x, y))
-            if p > 5:
+            if p > 150:
                 # This is a pixel with high intensity, so we want to perform hough transform on it
                 for t in theta:
                     r = x * math.cos(t) + y * math.sin(t)
@@ -129,3 +129,4 @@ if __name__ == '__main__':
     # box = [1] * 25
     # result = color_im.filter(ImageFilter.Kernel((5, 5), box, sum(box)))
     # result.show()
+    """
