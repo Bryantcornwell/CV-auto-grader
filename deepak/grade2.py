@@ -116,6 +116,8 @@ def connected_components(data):
 
 
 def segment(p, min_width, min_intensity):
+    '''
+    '''
     data = np.sum(p, axis=1)/p.shape[1]
     data_thresh = data.copy()
     data_thresh[data_thresh < 20] = 0
@@ -154,6 +156,8 @@ def get_answers(img, vertical_lines):
 
 
 def get_written(img, vertical_lines):
+    '''
+    '''
     written = {}
     for stack in [0, 1, 2]:
         p = patches(img, vertical_lines, stack=stack, sub_stack=0)
