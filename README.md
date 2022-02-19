@@ -23,6 +23,12 @@ From there the team discussed ways of implementing a QR-code and bar code using 
 There are 85x5=425 total pixels, so I decided to use a 17x25 matrix to fit into the QR code. An answer dictionary was created and utilized to convert the answers to a 5-digit binary string. This binary list was concatenated to a single string then to a 17x25 matrix of int values. From here, the matrix was scaled up to a 34x50 matrix by converting a single pixel to a 2x2 super-pixel. 
 
 I developed a QR code based on the 34x50 matrix as seen in Figure #1; where the gray portion of the image is where the encoded answer matrix would be placed. The scaled matrix is then placed within the QR code boundary, and all values were multiplied by 255 to generate white pixels. Figure #2 shows an example of a QR code for the a-27 test answer key. The “Image.fromarray()” function was used to convert the NumPy array into an image object. The “Image.paste()” function was utilized to place and position the image object on the desired image. The injected image was saved to a file to conclude the program.
+
+#### Figure 1. QR code boundary.
+![QRboundary.png](testBry/QRboundary.png)
+#### Figure 2. QR code example.
+![QRexample.png](testBry/QRexample.png)
+
 ### Extract.py
  
 ## Results
