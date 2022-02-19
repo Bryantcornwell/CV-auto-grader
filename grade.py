@@ -210,7 +210,8 @@ if __name__ == '__main__':
 
     img = cv2.imread(im_fname)
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    img_processed = preprocess(gray)
+    gray_rot = correct_tilt(gray)
+    img_processed = preprocess(gray_rot)
     vlines = get_vertical_lines(img_processed)
     if vlines.shape[0] != 36:
         raise Exception(f'found {vlines.shape[0]} vertical lines, expecting 36.')
