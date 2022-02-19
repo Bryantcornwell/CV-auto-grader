@@ -1,9 +1,7 @@
 from houghLines import HoughLines, show_lines, slope_close_to, merge_lines
 
-import matplotlib.pyplot as plt
 import numpy as np
 import cv2
-import time
 from collections import defaultdict
 import sys
 
@@ -27,6 +25,9 @@ ROT_HOUGH_THRESHOLD = 300
 
 
 def preprocess_top(gray):
+    '''
+    gray - numpy array - gray 
+    '''
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     blurred_cropped = blurred[:int(ROI_Y_RATIO*gray.shape[0]), :]
     (T, threshinv) = cv2.threshold(blurred_cropped, BINARY_THRESHOLD, 255, cv2.THRESH_BINARY_INV)
@@ -37,6 +38,9 @@ def preprocess_top(gray):
 
 
 def get_deviation(img):
+    '''
+
+    '''
     lines, acc_grid, thetas, rhos = HoughLines(img, ROT_HOUGH_RHO_RES, ROT_HOUGH_THETA_RES, ROT_HOUGH_THRESHOLD)
     sorted_lines = lines[np.argsort(lines[:, 0])]
     horizontal_lines = sorted_lines[slope_close_to(sorted_lines[:, 1], 90, tol=VERTICAL_SLOPE_TOL)]
@@ -44,6 +48,9 @@ def get_deviation(img):
 
 
 def rotate(gray, theta):
+    '''
+
+    '''
     h, w = gray.shape
     M = cv2.getRotationMatrix2D((w/2, h/2), theta, 1)
     shifted = cv2.warpAffine(gray, M, (w, h), borderMode=cv2.BORDER_REPLICATE)
@@ -51,6 +58,9 @@ def rotate(gray, theta):
 
 
 def correct_tilt(gray):
+    '''
+
+    '''
     img_pr = preprocess_top(gray)
     deviation = get_deviation(img_pr)
     print('detected deviation:', deviation)
@@ -60,18 +70,29 @@ def correct_tilt(gray):
 
 
 def preprocess(gray, vertical_edges=False):
+    '''
+    Pipeline:
+    - 5x5 Gaussian blur
+    - crop the image to contain only the options part
+    - Threshold the image to contain only 0s and 255s 
+    '''
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     blurred_cropped = blurred[int(ROI_Y_RATIO*gray.shape[0]):, :]
     (T, threshinv) = cv2.threshold(blurred_cropped, BINARY_THRESHOLD, 255, cv2.THRESH_BINARY_INV)
 
-    if vertical_edges:
-        sobel_kernel = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]]).T
-        pf = cv2.filter2D(src=threshinv, ddepth=-1, kernel=sobel_kernel)
-        return pf
+    # if vertical_edges:
+    #     sobel_kernel = np.array([[1, 2, 1], [0, 0, 0], [-1, -2, -1]]).T
+    #     pf = cv2.filter2D(src=threshinv, ddepth=-1, kernel=sobel_kernel)
+    #     return pf
     return threshinv
 
 
 def get_vertical_lines(img):
+    '''
+    - Find lines using Hough transform
+    - Filter out lines whose slope is within 15 degrees of 0 or 180
+    - Merge lines which are close to each other
+    '''
     lines, acc_grid, thetas, rhos = HoughLines(img, HOUGH_RHO_RES, HOUGH_THETA_RES, HOUGH_THRESHOLD)
     sorted_lines = lines[np.argsort(lines[:, 0])]
     vertical_lines = sorted_lines[slope_close_to(sorted_lines[:, 1], 0, tol=VERTICAL_SLOPE_TOL)]
@@ -80,6 +101,9 @@ def get_vertical_lines(img):
 
 
 def patches(img, vertical_lines, stack, sub_stack, col=None):
+    '''
+
+    '''
     y1, y2 = 0, img.shape[0]
 
     if sub_stack == 0:
