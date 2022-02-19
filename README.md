@@ -1,5 +1,5 @@
 # Assignment #1 Report
-Group Members: Deepak Duggirala, Li Sun, Bryant Cornwell
+Group Members: Deepak Duggirala, Bryant Cornwell, Li Sun
 
 ## Abstract
 
