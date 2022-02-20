@@ -5,7 +5,7 @@ do
   filename=$(basename -- "$FILE")
   extension="${filename##*.}"
   filename="${filename%.*}"
-  results_file="results2/${filename}_results.txt"
+  results_file="results3/${filename}_results.txt"
   groundtruth_file="../test-images/${filename}_groundtruth.txt"
 
   printf "\n\n\n*********\n"

@@ -4,6 +4,8 @@ import numpy as np
 import cv2
 from collections import defaultdict
 import sys
+from PIL import Image
+from PIL import ImageFilter
 
 ROI_Y_RATIO = 600/2200
 BINARY_THRESHOLD = 200
@@ -26,7 +28,7 @@ ROT_HOUGH_THRESHOLD = 300
 
 def preprocess_top(gray):
     '''
-    gray - numpy array - gray 
+    gray - numpy array - gray
     '''
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     blurred_cropped = blurred[:int(ROI_Y_RATIO*gray.shape[0]), :]
@@ -74,7 +76,7 @@ def preprocess(gray, vertical_edges=False):
     Pipeline:
     - 5x5 Gaussian blur
     - crop the image to contain only the options part
-    - Threshold the image to contain only 0s and 255s 
+    - Threshold the image to contain only 0s and 255s
     '''
     blurred = cv2.GaussianBlur(gray, (5, 5), 0)
     blurred_cropped = blurred[int(ROI_Y_RATIO*gray.shape[0]):, :]
@@ -85,6 +87,53 @@ def preprocess(gray, vertical_edges=False):
     #     pf = cv2.filter2D(src=threshinv, ddepth=-1, kernel=sobel_kernel)
     #     return pf
     return threshinv
+
+# def inv_threshold(img, t, lo=0, high=255):
+#     '''
+#     Identical to cv2.threshold(blurred_cropped, BINARY_THRESHOLD, 255, cv2.THRESH_BINARY_INV)
+#     '''
+#     out = img.copy()
+#     mask_hi = img > t
+#     out[mask_hi] = lo
+
+#     out[~mask_hi] = high
+
+#     return out
+
+
+# def gaussian_blur(im):
+#     '''
+#     Identical to cv2.GaussianBlur(gray, (5, 5), 0)
+#     '''
+#     # https://hhsprings.bitbucket.io/docs/programming/examples/python/PIL/ImageFilter.html
+#     km = np.array((
+#         (1, 4, 6, 4, 1),
+#         (4, 16, 24, 16, 4),
+#         (6, 24, 36, 24, 6),
+#         (4, 16, 24, 16, 4),
+#         (1, 4, 6, 4, 1),
+#     )) / 256.
+#     k = ImageFilter.Kernel(
+#         size=km.shape,
+#         kernel=km.flatten(),
+#         scale=np.sum(km),  # default
+#         offset=0  # default
+#     )
+#     return im.filter(k)
+
+
+# def preprocess(im):
+#     '''
+#     Pipeline:
+#     - 5x5 Gaussian blur
+#     - crop the image to contain only the options part
+#     - inverse threshold the image to contain only 0s and 255s
+#     '''
+#     gray = im.convert("L")
+#     blurred = np.asarray(gaussian_blur(gray))
+#     im_cropped = blurred[int(ROI_Y_RATIO*blurred.shape[0]):, :]
+#     threshinv = inv_threshold(im_cropped, 200)
+#     return threshinv
 
 
 def get_vertical_lines(img):
