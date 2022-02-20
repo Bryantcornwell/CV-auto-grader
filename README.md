@@ -3,20 +3,16 @@
 Group Members: Deepak Duggirala, Bryant Cornwell, Li Sun
 
 ## Abstract
-
-
+As a widely used grading technology, the generation and recognition of answer sheets improve the efficiency and decrease the human error. It can be implemented by With multiple programming languages with full-fledged templates. However, we abandon flaring libraries and try to achieve a fairly robust model only with basic mathmetic packages and pillow library, so that laying the ground of learning of image encryption/decryption, line detection, filterings, segmentation, etc.
 
 ## Introduction
-
-
+With 5 options, A...E, per question and binary encryption, we use 5-digit binary array to represent the solutions. For extracting the solution area, we try methods of grid overlay, othogonal lines, and vertical patches. Besides, we detect the occurence of handwitten letter via density of pixels.
 
 ## Methods
 ### Inject.py
 Run the code from the terminal using the following format on the linux server and ensure to type the file names for the  '< >' desired arguments below:
 
-    python3 inject.py <image_name.jpg> <key_name.txt> <injected_output.png>
-Note: PNG file formart would be best for exporting the image to avoid/reduce visual artifacts cause by using jpg format.
-
+    python3 inject.py <image_name.jpg> <key_name.txt> <injected_output.jpg>
 The first task of inject.py was to open the image using the PIL library and create a list of each line of the answer key file. The numbers and special characters were then removed to generate a list of answer. The first idea of encrypting the answer key was to use character encoding. However, failed to find an accurate/robust way to read decrypt the answer key without using other computer vision libraries.
 
 From there the team discussed ways of implementing a QR-code and bar code using information and ideas from Wikipedia [1]. Since bar and QR codes use black and white pixels, we determined that we would need to encode the answers using binary operations. To encode all 31 answer options, it required five pixels per question (2^5 = 32). The group decided that the encoded answers would need be scaled up to avoid noise. 
@@ -32,9 +28,7 @@ The QR code was developed based on the 34x50 matrix as seen in Figure #1; where 
 ### Extract.py
 Run the code from the terminal using the following format on the linux server and ensure to type the file names for the  '< >' desired arguments below:
 
- python3 extract.py <image_name.jpg> <output.txt>
-Note: PNG file format would be preferred for the input image.
-
+    python3 extract.py <image_name.jpg> <output.txt> 
 The first task of extract.py was to open the image using the PIL library and create a dictionary to decrypt the binary answers. The image was cropped to a small region using the relative location of where the QR code was injected. 
 
 The first approach to detect the QR code did not go as expected. A convolution was performed on the cropped region using a kernel similar to the three boundary boxes. The idea was to find the center coordinates of the three boundary boxes using of the brightest value after convolution. Figure #3 is the result of this experiment.
@@ -45,9 +39,7 @@ The height and width of the binary matrix was found based on the points in the p
 #### Figure 3. Convolution performed on a QR code example.
 ![QRconvolution.png](testBry/QRconvolution.png)
 ## Results
- <img width="1174" alt="c-33" src="https://media.github.iu.edu/user/18596/files/ad8fc77a-514e-44a3-84b0-e3bc0e8ba3ff">
-<img width="1171" alt="b-27" src="https://media.github.iu.edu/user/18596/files/45a1b319-2ccb-4127-b5db-b4c735c46a9c">
-<img width="1215" alt="b-13" src="https://media.github.iu.edu/user/18596/files/ff3cff47-f154-4000-b69b-48ef75c609c9">
+
  
  
 ## Discussion
@@ -59,11 +51,12 @@ The height and width of the binary matrix was found based on the points in the p
 
 ## Acknowledges
 ### Bryant Cornwell 
-I wrote a majority of the code for inject.py and extract.py, and contributed to the research and ideas for developing the QR code. I also provided partial starter code and ideas for tackling the Hough Transform utilizing methods and ideas from Wikipedia [4]. For the report, I wrote the inject.py and extract.py sub-sections within the Methods section. 
+Wrote a majority of the code for inject.py and extract.py, and contributed to the research and ideas for developing the QR code. Also provided partial starter code and ideas for tackling the Hough Transform utilizing methods and ideas from Wikipedia [4]. For the report, Wrote the inject.py and extract.py sub-sections within the Methods section. 
 ### Deepak Duggirala
-Provided initial QR code detection approach.
+Provided initial QR code detection approach. Wrote the grade.py. Details are shown in grade-report.md. Wrote the whole grade-report.md.
 ### Li Sun
-Contributed to the research and ideas for developing the QR code.
+Contributed to the research and ideas for developing the QR code. Helped to test codes on burrow.luddy.indiana.edu. Wrote the abstract, introduction, discussion and conclusion parts of this report.
+
 ## References
 [1] https://en.wikipedia.org/wiki/QR_code
 
