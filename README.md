@@ -55,7 +55,7 @@ Wrote a majority of the code for inject.py and extract.py, and contributed to th
 ### Deepak Duggirala
 Provided initial QR code detection approach. Wrote the grade.py. Details are shown in grade-report.md. Wrote the whole grade-report.md.
 ### Li Sun
-Contributed to the research and ideas for developing the QR code. Helped to test codes on burrow.luddy.indiana.edu. Wrote the abstract, introduction, discussion and conclusion parts of this report.
+Contributed to the research and ideas for developing the QR code. Helped to test codes on burrow.luddy.indiana.edu. Wrote the abstract, introduction, .... parts of this report.
 
 ## References
 [1] https://en.wikipedia.org/wiki/QR_code
