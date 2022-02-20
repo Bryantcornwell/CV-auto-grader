@@ -1,4 +1,5 @@
 from PIL import Image
+import numpy as np
 import sys
 
 
@@ -33,8 +34,6 @@ if __name__ == '__main__':
             a_list.append(p)
             if a_list[-10:] == check_list:
                 pixel_list.append((x, y))
-            else:
-                pass
 
     # Use the location of the first point to determine the encoded matrix.
     start_h = (pixel_list[0][1] - 4)
@@ -42,18 +41,29 @@ if __name__ == '__main__':
     mat_width = (pixel_list[1][0] - 11) - start_w
     mat_height = (pixel_list[4][1] + 5) - start_h
 
-    # Convert the 2x2 pixel matrix to a single pixel matrix and extract values.
+    # Convert the image to a list of pixel values and sets all 255 values to 1.
     mat_values = []
-    for h in range(start_h, mat_height + start_h, 2):
-        for w in range(start_w, mat_width+start_w, 2):
+    for h in range(start_h, mat_height + start_h+1):
+        for w in range(start_w, mat_width+start_w+1):
             if test_space.getpixel((w, h)) == 255:
                 test_space.putpixel((w, h), 1)
-            mat_values.append(str(test_space.getpixel((w, h))))
+            mat_values.append(test_space.getpixel((w, h)))
+
+    # Convert the 2x2 pixel matrix to a single pixel matrix and extract values by averaging all four values in the
+    #  2x2 superpixels.
+    test_values = np.array(mat_values).reshape((34,50))
+    str_list = []
+    for w in range(0, test_values.shape[0], 2):
+        for h in range(0, test_values.shape[1], 2):
+            if (np.mean(test_values[w:w+2, h:h+2])) >= 0.5:
+                str_list.append('1')
+            else:
+                str_list.append('0')
 
     # In order to use the dictionary to decode the answers, every five list values need to be combined.
     binary_list = []
     for i in range(85):
-        binary_list.append("".join(mat_values[0+5*i:5 + 5*i]))
+        binary_list.append("".join(str_list[0+5*i:5 + 5*i]))
 
     # Decode the answers using the dictionary and prepare the numbered output for each answer.
     answer_list = []
