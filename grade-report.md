@@ -14,6 +14,13 @@ Example:
 python3 grade.py test-images/a-27.jpg a-27_results.txt
 ```
 
+The program is expected to take about 40s to run on a single image.
+
+#### testing
+`./test_grade.sh` runs the `grade.py` against all test-images and store the results in `results` directory. It also compares the output against the corresponding groundtruth file present in `test-images/`. 
+
+It is observed that the `grade.py` has **100%** accuracy on all the test images. 
+
 ## Approaches
 
 We tried different ways to extract the poistion of the boxes.

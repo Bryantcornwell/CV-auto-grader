@@ -1,5 +1,5 @@
 import numpy as np
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 
 def HoughLines(img, rho_res, theta_res, votes_threshold):
@@ -40,26 +40,26 @@ def HoughLines(img, rho_res, theta_res, votes_threshold):
 # threshinv.shape, acc_grid.shape, len(lines)
 
 
-def show_lines(img, lines, title='img'):
-    fig, axes = plt.subplots(figsize=(10, 16))
-    axes.imshow(img, cmap='gray')
-    d = max(img.shape)
-    for rho, theta in lines:
-        dx = np.cos(theta)
-        dy = np.sin(theta)
-        x0 = dx*rho
-        y0 = dy*rho
-        # (x0,y0) is a point on the line
-        # print(x0,y0)
-        x1 = int(x0 + d*(-dy))
-        y1 = int(y0 + d*(dx))
-        x2 = int(x0 - d*(-dy))
-        y2 = int(y0 - d*(dx))
-        # print(x1,y1,x2,y2)
-        axes.plot([x1, x2], [y1, y2], '-.', color='red', alpha=0.7)
-    axes.set_xlim(0, img.shape[1])  # x is cols
-    axes.set_ylim(img.shape[0], 0)  # y is rows
-    axes.set_title(title)
+# def show_lines(img, lines, title='img'):
+#     fig, axes = plt.subplots(figsize=(10, 16))
+#     axes.imshow(img, cmap='gray')
+#     d = max(img.shape)
+#     for rho, theta in lines:
+#         dx = np.cos(theta)
+#         dy = np.sin(theta)
+#         x0 = dx*rho
+#         y0 = dy*rho
+#         # (x0,y0) is a point on the line
+#         # print(x0,y0)
+#         x1 = int(x0 + d*(-dy))
+#         y1 = int(y0 + d*(dx))
+#         x2 = int(x0 - d*(-dy))
+#         y2 = int(y0 - d*(dx))
+#         # print(x1,y1,x2,y2)
+#         axes.plot([x1, x2], [y1, y2], '-.', color='red', alpha=0.7)
+#     axes.set_xlim(0, img.shape[1])  # x is cols
+#     axes.set_ylim(img.shape[0], 0)  # y is rows
+#     axes.set_title(title)
 
 
 def slope_close_to(theta, theta_0, tol=5):

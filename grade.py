@@ -1,4 +1,4 @@
-from houghLines import HoughLines, show_lines, slope_close_to, merge_lines
+from houghLines import HoughLines, slope_close_to, merge_lines
 
 import numpy as np
 import cv2
