@@ -14,7 +14,9 @@ Group Members: Deepak Duggirala, Bryant Cornwell, Li Sun
 ### Inject.py
 Run the code from the terminal using the following format on the linux server and ensure to type the file names for the  '< >' desired arguments below:
 
-    python3 inject.py <image_name.jpg> <key_name.txt> <injected_output.jpg>
+    python3 inject.py <image_name.jpg> <key_name.txt> <injected_output.png>
+Note: PNG file formart would be best for exporting the image to avoid/reduce visual artifacts cause by using jpg format.
+
 The first task of inject.py was to open the image using the PIL library and create a list of each line of the answer key file. The numbers and special characters were then removed to generate a list of answer. The first idea of encrypting the answer key was to use character encoding. However, failed to find an accurate/robust way to read decrypt the answer key without using other computer vision libraries.
 
 From there the team discussed ways of implementing a QR-code and bar code using information and ideas from Wikipedia [1]. Since bar and QR codes use black and white pixels, we determined that we would need to encode the answers using binary operations. To encode all 31 answer options, it required five pixels per question (2^5 = 32). The group decided that the encoded answers would need be scaled up to avoid noise. 
@@ -30,7 +32,9 @@ The QR code was developed based on the 34x50 matrix as seen in Figure #1; where 
 ### Extract.py
 Run the code from the terminal using the following format on the linux server and ensure to type the file names for the  '< >' desired arguments below:
 
-    python3 extract.py <image_name.jpg> <output.txt> 
+ python3 extract.py <image_name.jpg> <output.txt>
+Note: PNG file format would be preferred for the input image.
+
 The first task of extract.py was to open the image using the PIL library and create a dictionary to decrypt the binary answers. The image was cropped to a small region using the relative location of where the QR code was injected. 
 
 The first approach to detect the QR code did not go as expected. A convolution was performed on the cropped region using a kernel similar to the three boundary boxes. The idea was to find the center coordinates of the three boundary boxes using of the brightest value after convolution. Figure #3 is the result of this experiment.
