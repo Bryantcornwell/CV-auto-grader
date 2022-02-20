@@ -35,7 +35,7 @@ The first approach to detect the QR code did not go as expected. A convolution w
 
 The next approach at QR code detection was a pixel scanning method. A check list was generated based on a segment of pixel values that ranged across the center of the QR boundary box, and used to compare against a list of similar length of scanned values. To deal with noise during scanning, each pixel is replaced by 255 or 0 if the original value was less than 150 or not. The values of pixels in each row of the image are saved to a list and compared against the boundary box check list. The x and y coordinates are saved in a point list each time the previous values in the scanned row list and check list values match. These points correspond to the pixel located at the middle-right of the boundary box.
 
-The height and width of the binary matrix was found based on the points in the point list. The values were extracted, altered 255 values to 1, and added to list as a string type using the detected matrix boundaries. Every five characters are combined to generate a list used to decrypt the binary answer. During the decryption, the question/answer number is concatenated with the corresponding answer. The answer key list was combined with newline characters (‘\n’), written, and saved to the output file to conclude the program.
+The height and width of the binary matrix was found based on the points in the point list. The values were extracted to a list, and the 255 values were altered to 1. This list was converted to an array then the superpixel values were averaged to determine if the pixel was white or black using the detected matrix boundaries. Using this array, a list of string values were generated for each superpixel. Every five string elements are combined to generate a list used to decrypt the binary answer. During the decryption, the question/answer number is concatenated with the corresponding answer. The answer key list was combined with newline characters (‘\n’), written, and saved to the output file to conclude the program.
 #### Figure 3. Convolution performed on a QR code example.
 ![QRconvolution.png](testBry/QRconvolution.png)
 
@@ -225,7 +225,7 @@ The edges of the segmented components represents the horizontal sides of the box
 
 If the average intensity of this small patch is greater than a certain threshold, then it is assumed that there was something written in this patch. 
 
-Reducing this threshold will increase false-poitives because of noise or the presence of box edges leaking over from the adjacent vertical patches.
+Reducing this threshold will increase false-positives because of noise or the presence of box edges leaking over from the adjacent vertical patches.
 
 
 ## Results
@@ -233,7 +233,14 @@ Reducing this threshold will increase false-poitives because of noise or the pre
  
  
 ## Discussion
+### Inject.py and Extract.py
+Convolutions did not make it in the file code for extract.py but were used to conduct experiments for the QR code detection. When testing convolutions on the image for custom kernels utilizing code from Lab1, the code execution would run for well over an hour on the full image file. To combat this, the image was reduced and used a cropped region of the original image to reduce the code execution duration.
 
+The inject.py and extract.py code works very well on images where they have not been printed and scanned between inject.py and extract.py. If a black pixel were to be added into the QR code where a white pixel should be, then it could cause an error when decrypting the answers. When using the injected image exported in JPG file format, I found that the pixel values were no longer 0 and 255. I added code to change them back to 0 and 255; however, exporting the image using PNG file format will not cause these artifacts. 
+
+When scaling down the 2x2 matrix, the code originally took the first pixel in each super-pixel to determine the answer. This could be an issue if the image noise changes the pixel values and could result in an incorrect answer key. To make the detection more robust, the averages of the super-pixel values were used to scale down the answer matrix would be the future of this program. 
+
+If the image is flipped or rotated slightly, the QR code becomes undetectable without utilizing more computer vision techniques. Also, the answer key detection would potentially fail if the QR code was marked on with a pen or ink smudges. Scaling the QR code more could make it more robust to noise but may cause the program to run longer.
 
 ## Conclusions
 
@@ -241,7 +248,8 @@ Reducing this threshold will increase false-poitives because of noise or the pre
 
 ## Acknowledges
 ### Bryant Cornwell 
-Wrote a majority of the code for inject.py and extract.py, and contributed to the research and ideas for developing the QR code. Also provided partial starter code and ideas for tackling the Hough Transform utilizing methods and ideas from Wikipedia [4]. For the report, Wrote the inject.py and extract.py sub-sections within the Methods section. 
+Wrote a majority of the code for inject.py and extract.py, and contributed to the research and ideas for developing the QR code. Also provided partial starter code and ideas for tackling the Hough Transform utilizing methods and ideas from Wikipedia [4]. For the report, Wrote the inject.py and extract.py sub-sections within the Methods section.
+When the assignment was initially released, the assignment was discussed at a high level with another classmate, Seth Mize.
 ### Deepak Duggirala
 Provided initial QR code detection approach. Wrote the grade.py. Details are shown in grade-report.md. Wrote the whole grade-report.md.
 ### Li Sun
