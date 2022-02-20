@@ -47,15 +47,17 @@ The height and width of the binary matrix was found based on the points in the p
 ## Discussion
 
 
-
 ## Conclusions
 
 
 
 ## Acknowledges
-
-
-
+### Bryant Cornwell 
+I wrote a majority of the code for inject.py and extract.py, and contributed to the research and ideas for developing the QR code. I also provided partial starter code and ideas for tackling the Hough Transform utilizing methods and ideas from Wikipedia [4]. For the report, I wrote the inject.py and extract.py sub-sections within the Methods section. 
+### Deepak Duggirala
+Provided initial QR code detection approach.
+### Li Sun
+Contributed to the research and ideas for developing the QR code.
 ## References
 [1] https://en.wikipedia.org/wiki/QR_code
 
@@ -63,5 +65,6 @@ The height and width of the binary matrix was found based on the points in the p
 
 [3] https://pillow.readthedocs.io/en/stable/reference/Image.html?highlight=paste#PIL.Image.Image.paste
 
+[4] https://en.wikipedia.org/wiki/Hough_transform#Kernel-based_Hough_transform_(KHT)
 
 
