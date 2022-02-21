@@ -229,7 +229,7 @@ Reducing this threshold will increase false-positives because of noise or the pr
 
 
 ## Results
-
+Veritical patches method has 100% accuracy on all test-images.
  
  
 ## Discussion
@@ -253,7 +253,7 @@ When the assignment was initially released, the assignment was discussed at a hi
 ### Deepak Duggirala
 Provided initial QR code detection approach. Wrote the grade.py. Details are shown in grade-report.md. Wrote the whole grade-report.md.
 ### Li Sun
-Contributed to the research and ideas for developing the QR code. Helped to test codes on burrow.luddy.indiana.edu. Wrote the abstract, introduction, .... parts of this report.
+Contributed to the research and ideas for developing the QR code. Tried erosion method for extraction of the marked areas. Helped to test codes on burrow.luddy.indiana.edu. Wrote the abstract, introduction, .... parts of this report.
 
 ## References
 [1] https://en.wikipedia.org/wiki/QR_code
