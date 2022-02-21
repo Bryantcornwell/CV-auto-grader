@@ -13,7 +13,7 @@ With 5 options, A...E, per question and binary encryption, we use 5-digit binary
 Run the code from the terminal using the following format on the linux server and ensure to type the file names for the  '< >' desired arguments below:
 
     python3 inject.py <image_name.jpg> <key_name.txt> <injected_output.jpg>
-The first task of inject.py was to open the image using the PIL library and create a list of each line of the answer key file. The numbers and special characters were then removed to generate a list of answer. The first idea of encrypting the answer key was to use character encoding. However, failed to find an accurate/robust way to read decrypt the answer key without using other computer vision libraries.
+The first task of inject.py was to open the image using the PIL library and create a list of each line of the answer key file. The numbers and special characters were then removed to generate a list of answer. The first idea of encrypting the answer key was to use character encoding. However, failed to find an accurate/robust way to decrypt the answer key without using other computer vision libraries.
 
 From there the team discussed ways of implementing a QR-code and bar code using information and ideas from Wikipedia [1]. Since bar and QR codes use black and white pixels, we determined that we would need to encode the answers using binary operations. To encode all 31 answer options, it required five pixels per question (2^5 = 32). The group decided that the encoded answers would need be scaled up to avoid noise. 
 
@@ -31,7 +31,7 @@ Run the code from the terminal using the following format on the linux server an
     python3 extract.py <image_name.jpg> <output.txt> 
 The first task of extract.py was to open the image using the PIL library and create a dictionary to decrypt the binary answers. The image was cropped to a small region using the relative location of where the QR code was injected. 
 
-The first approach to detect the QR code did not go as expected. A convolution was performed on the cropped region using a kernel similar to the three boundary boxes. The idea was to find the center coordinates of the three boundary boxes using of the brightest value after convolution. Figure #3 is the result of this experiment.
+The first approach to detect the QR code did not go as expected. A convolution was performed on the cropped region using a kernel similar to the three boundary boxes. The idea was to find the center coordinates of the three boundary boxes using the brightest value after convolution. Figure #3 is the result of this experiment.
 
 The next approach at QR code detection was a pixel scanning method. A check list was generated based on a segment of pixel values that ranged across the center of the QR boundary box, and used to compare against a list of similar length of scanned values. To deal with noise during scanning, each pixel is replaced by 255 or 0 if the original value was less than 150 or not. The values of pixels in each row of the image are saved to a list and compared against the boundary box check list. The x and y coordinates are saved in a point list each time the previous values in the scanned row list and check list values match. These points correspond to the pixel located at the middle-right of the boundary box.
 
@@ -238,7 +238,7 @@ Convolutions did not make it in the file code for extract.py but were used to co
 
 The inject.py and extract.py code works very well on images where they have not been printed and scanned between inject.py and extract.py. If a black pixel were to be added into the QR code where a white pixel should be, then it could cause an error when decrypting the answers. When using the injected image exported in JPG file format, I found that the pixel values were no longer 0 and 255. I added code to change them back to 0 and 255; however, exporting the image using PNG file format will not cause these artifacts. 
 
-When scaling down the 2x2 matrix, the code originally took the first pixel in each super-pixel to determine the answer. This could be an issue if the image noise changes the pixel values and could result in an incorrect answer key. To make the detection more robust, the averages of the super-pixel values were used to scale down the answer matrix would be the future of this program. 
+When scaling down the 2x2 matrix, the code originally took the first pixel in each super-pixel to determine the answer. This could be an issue if the image noise changes the pixel values and could result in an incorrect answer key. To make the detection more robust, the averages of the super-pixel values were used to scale down the answer matrix. 
 
 If the image is flipped or rotated slightly, the QR code becomes undetectable without utilizing more computer vision techniques. Also, the answer key detection would potentially fail if the QR code was marked on with a pen or ink smudges. Scaling the QR code more could make it more robust to noise but may cause the program to run longer.
 
