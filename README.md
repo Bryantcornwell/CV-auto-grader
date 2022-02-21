@@ -6,7 +6,7 @@ Group Members: Deepak Duggirala, Bryant Cornwell, Li Sun
 As a widely used grading technology, the generation and recognition of answer sheets improve the efficiency and decrease the human error. It can be implemented by  multiple programming languages with full-fledged templates. However, we abandon flaring libraries and try to achieve a fairly robust model only with basic mathmetic packages and pillow library, so that laying the ground of learning of image encryption/decryption, line detection, filterings, segmentation, etc.
 
 ## Introduction
-With 5 options, A...E, per question and binary encryption, we use 5-digit binary array to represent the solutions. For extracting the solution area, we try methods of grid overlay, othogonal lines, and vertical patches. The vertial patches works very well in accuracy. It preprocesses images with Gaussian blur and conversion with threshold. Redress the tilt by horizontal compensation. Then extracting the vertical patches, dividing and naming them stack, substack, and col for handwritten area, question numbers area and solutions area respectively.For each patch, marked areas have continuous and homogeneous pixel values. Also, because we use vertial patches instead of horizontal counterparts, the unmakred areas within each patch have similar shape. Besides, we detect the occurence of handwitten letter via density of pixels.
+With 31 options, A,...ABCDE, per question and binary encryption, we use 5-digit binary array to represent the solutions. For extracting the solution area, we try methods of grid overlay, othogonal lines, and vertical patches. The vertial patches works very well in accuracy. It preprocesses images with Gaussian blur and conversion with threshold. Redress the tilt by horizontal compensation. Then extracting the vertical patches, dividing and naming them stack, substack, and col for handwritten area, question numbers area and solutions area respectively.For each patch, marked areas have continuous and homogeneous pixel values. Also, because we use vertial instead of horizontal counterparts, the unmarked areas within each patch have similar shape. Besides, we detect the occurence of handwitten letter via density of pixels.
 
 ## Methods
 ### Inject.py
@@ -229,8 +229,7 @@ Reducing this threshold will increase false-positives because of noise or the pr
 
 
 ## Results
-Veritical patches method has 100% accuracy on all test-images.
- 
+We fulfill the requirement of assignment 1. With 4\*4 pixels, the injection/extraction of QR code deliveries a robust performance. And our veritical patches method has remarkable 100% accuracy on all test-images under reasonable degree of assumptions.
  
 ## Discussion
 ### Inject.py and Extract.py
@@ -241,10 +240,13 @@ The inject.py and extract.py code works very well on images where they have not 
 When scaling down the 2x2 matrix, the code originally took the first pixel in each super-pixel to determine the answer. This could be an issue if the image noise changes the pixel values and could result in an incorrect answer key. To make the detection more robust, the averages of the super-pixel values were used to scale down the answer matrix. 
 
 If the image is flipped or rotated slightly, the QR code becomes undetectable without utilizing more computer vision techniques. Also, the answer key detection would potentially fail if the QR code was marked on with a pen or ink smudges. Scaling the QR code more could make it more robust to noise but may cause the program to run longer.
+### grade.py
+The HoughLines implementation has to be improved because it is a performance bottleneck that accounts for 95% of the runtime.
+
+Some of the tolerances used in grade.py  assume certain dimensions of the image and may not work when resolution changes. These should be inferred from the resolution not simply a constant
 
 ## Conclusions
-
-
+With this assignment, we learn the techniques of line detection, segmentation, encryption and decryption pixels and so on in practice. Reinforce our knowledge foundation of computer vision domain. Conquer obstacles by negotiation and collaboration. And recognize the great challenge and potential of image processing intuitively.
 
 ## Acknowledges
 ### Bryant Cornwell 
