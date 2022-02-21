@@ -106,13 +106,13 @@ Hough transform algorithm is implemented from scratch to find the straight lines
 The code for HoughLines is in [houghLines.py](houghLines.py)
 
 Algorithm:
-- ![\rho](https://latex.codecogs.com/svg.image?\rho), ![\theta](https://latex.codecogs.com/svg.image?\theta)are discretized using the resolutions provided within the range $-d \le \rho \le d$, $d = \sqrt{w^2 + h^2}$ and $0 \le \theta < \pi$ respectively.
-- An accumulator is grid is constructed by using discretized $\rho$ and $\theta$.
-- For each non zero pixel in the input image, all possible pairs of $\rho$ and $\theta$ are obtained fixing (x,y) using the equation $\rho = x cos(\theta) + y sin(\theta)$
+- ![\rho](https://latex.codecogs.com/svg.image?\rho), ![\theta](https://latex.codecogs.com/svg.image?\theta) are discretized using the resolutions provided within the range ![$-d \le \rho \le d$](https://latex.codecogs.com/svg.image?-d&space;\le&space;\rho&space;\le&space;d), ![$d = \sqrt{w^2 + h^2}$](https://latex.codecogs.com/svg.image?d&space;=&space;\sqrt{w^2&space;&plus;&space;h^2}) and ![$0 \le \theta < \pi$](https://latex.codecogs.com/svg.image?0&space;\le&space;\theta&space;<&space;\pi) respectively.
+- An accumulator is grid is constructed by using discretized ![\rho](https://latex.codecogs.com/svg.image?\rho) and ![\theta](https://latex.codecogs.com/svg.image?\theta).
+- For each non zero pixel in the input image, all possible pairs of ![\rho](https://latex.codecogs.com/svg.image?\rho) and ![\theta](https://latex.codecogs.com/svg.image?\theta) are obtained fixing (x,y) using the equation ![$\rho = x cos(\theta) + y sin(\theta)$](https://latex.codecogs.com/svg.image?\rho&space;=&space;x&space;cos(\theta)&space;&plus;&space;y&space;sin(\theta))
     - For each pair the corresponding grid value in the accumulator is incremented.
-- Finally, $\rho$ and $\theta$ for the grid cells that exceed the vote threshold given are returned.
+- Finally, ![\rho](https://latex.codecogs.com/svg.image?\rho) and ![\theta](https://latex.codecogs.com/svg.image?\theta) for the grid cells that exceed the vote threshold given are returned.
 
-This algorithm is an improved version of [5]: added variable $\rho$ and $\theta$ resolutions and used numpy function to eliminate loops.
+This algorithm is an improved version of [5]: added variable ![\rho](https://latex.codecogs.com/svg.image?\rho) and ![\theta](https://latex.codecogs.com/svg.image?\theta) resolutions and used numpy function to eliminate loops.
 
 
 |                                     Example Image                                     |                                              Hough Space                                              |
