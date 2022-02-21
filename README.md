@@ -253,7 +253,7 @@ With this assignment, we learn the techniques of line detection, segmentation, e
 Wrote a majority of the code for inject.py and extract.py, and contributed to the research and ideas for developing the QR code. Also provided partial starter code and ideas for tackling the Hough Transform utilizing methods and ideas from Wikipedia [4]. For the report, Wrote the inject.py and extract.py sub-sections within the Methods section.
 When the assignment was initially released, the assignment was discussed at a high level with another classmate, Seth Mize.
 ### Deepak Duggirala
-Provided initial QR code detection approach. Wrote the grade.py. Help with coding implementation and improvement.
+Provided initial QR code detection approach. Brainstorm and wrote the grade.py. Help with coding implementation and improvement.
 ### Li Sun
 Contributed to the research and ideas for developing the QR code. Tried erosion method for extraction of the marked areas. Helped to test codes on burrow.luddy.indiana.edu. Wrote the abstract, introduction, .... parts of this report.
 
