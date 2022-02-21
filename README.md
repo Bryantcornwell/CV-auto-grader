@@ -101,7 +101,7 @@ The idea is to find the vertical lines that join the boxes and extract vertical 
 
 ### Hough Lines
 
-Hough transform algorithm is implemented from scratch to find the straight lines in the image. This algorithm can work with varying $\rho$-$\theta$ grid resolutions.
+Hough transform algorithm is implemented from scratch to find the straight lines in the image. This algorithm can work with varying ![\rho](https://latex.codecogs.com/svg.image?\rho) - ![\theta](https://latex.codecogs.com/svg.image?\theta) grid resolutions.
 
 The code for HoughLines is in [houghLines.py](houghLines.py)
 
@@ -128,8 +128,8 @@ We determine the angular deviation of the lines from the horizontal and rotate t
 
 The image is preprocessed with gaussian blur, inverse thresholding, and Sobel filter to find horizontal edges.
 Lines closer to slope 90 (horizontal) are then found using the Hough transform by using a fine grid where theta resolution is set to 1/16th of degree.
-The tilt $theta$ away from the horizontal is indicated by the average slope of the selected lines.
-After that, the entire image is rotated by $-theta$ around the center. This makes lines joining boxes vertical and accessing the boxes by horizontal and vertical offset feasible. 
+The tilt ![\theta](https://latex.codecogs.com/svg.image?\theta) away from the horizontal is indicated by the average slope of the selected lines.
+After that, the entire image is rotated by ![\theta](https://latex.codecogs.com/svg.image?\theta) around the center. This makes lines joining boxes vertical and accessing the boxes by horizontal and vertical offset feasible. 
 
 <img src="report-resources/tilted-top-portion.png" alt="horiz-vert-lines" width="800"/>
 
@@ -142,7 +142,7 @@ After that, the entire image is rotated by $-theta$ around the center. This make
 ## Identifying the vertical lines
 
 Before applying the Hough Transform, the image is blurred with a 5x5 gaussian filter and inverse thresholded.
-The grid is finer, with a $\rho$ result of 1/4th of a pixel and a $\theta$ resolution of 1/4th of a degree.
+The grid is finer, with a ![\rho](https://latex.codecogs.com/svg.image?\rho) result of 1/4th of a pixel and a $\theta$ resolution of 1/4th of a degree.
 To extract as many lines as feasible, the vote threshold is set low (300).
 The lines are then filtered to maintain only those with slopes near zero or 180 degrees.
 
@@ -157,8 +157,8 @@ Because of pixels in letters (options: A B C D E) and pixels from darkened boxes
 By combining lines that are close together, these extra lines are removed.
 
 
-The merging procedure is as follows: all vertical lines are sorted using $\rho$ so that the lines that are next to each other in the image are also side by side in the array.
-The lines are then looped over until only those that are $k$ pixels apart in $\rho$ values are kept.
+The merging procedure is as follows: all vertical lines are sorted using ![\rho](https://latex.codecogs.com/svg.image?\rho) so that the lines that are next to each other in the image are also side by side in the array.
+The lines are then looped over until only those that are $k$ pixels apart in ![\rho](https://latex.codecogs.com/svg.image?\rho) values are kept.
 Only the vertical lines that cross through the vertical margins of the boxes are left after this technique as it eliminates lines that are close to each other. 
 
 
