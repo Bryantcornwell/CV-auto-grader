@@ -240,6 +240,8 @@ The inject.py and extract.py code works very well on images where they have not 
 When scaling down the 2x2 matrix, the code originally took the first pixel in each super-pixel to determine the answer. This could be an issue if the image noise changes the pixel values and could result in an incorrect answer key. To make the detection more robust, the averages of the super-pixel values were used to scale down the answer matrix. 
 
 If the image is flipped or rotated slightly, the QR code becomes undetectable without utilizing more computer vision techniques. Also, the answer key detection would potentially fail if the QR code was marked on with a pen or ink smudges. Scaling the QR code more could make it more robust to noise but may cause the program to run longer.
+
+Overall, extract.py could be further improved by detecting and handling image rotation or if the image has been flipped. Future work of inject.py will be determined the balance between scaling the QR code and code runtime.
 ### grade.py
 The HoughLines implementation has to be improved because it is a performance bottleneck that accounts for 95% of the runtime.
 
