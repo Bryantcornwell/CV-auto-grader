@@ -6,7 +6,7 @@ Group Members: Deepak Duggirala, Bryant Cornwell, Li Sun
 As a widely used grading technology, the generation and recognition of answer sheets improve the efficiency and decrease the human error. It can be implemented by  multiple programming languages with full-fledged templates. However, we abandon flaring libraries and try to achieve a fairly robust model only with basic mathmetic packages and pillow library, so that laying the ground of learning of image encryption/decryption, line detection, filterings, segmentation, etc.
 
 ## Introduction
-With 5 options, A...E, per question and binary encryption, we use 5-digit binary array to represent the solutions. For extracting the solution area, we try methods of grid overlay, othogonal lines, and vertical patches. Besides, we detect the occurence of handwitten letter via density of pixels.
+With 5 options, A...E, per question and binary encryption, we use 5-digit binary array to represent the solutions. For extracting the solution area, we try methods of grid overlay, othogonal lines, and vertical patches. The vertial patches works very well in accuracy. It preprocesses images with Gaussian blur and conversion with threshold. Redress the tilt by horizontal compensation. Then extracting the vertical patches, dividing and naming them stack, substack, and col for handwritten area, question numbers area and solutions area respectively.For each patch, marked areas have continuous and homogeneous pixel values. Also, because we use vertial patches instead of horizontal counterparts, the unmakred areas within each patch have similar shape. Besides, we detect the occurence of handwitten letter via density of pixels.
 
 ## Methods
 ### Inject.py
@@ -106,7 +106,7 @@ Hough transform algorithm is implemented from scratch to find the straight lines
 The code for HoughLines is in [houghLines.py](houghLines.py)
 
 Algorithm:
-- \rho, $\theta$ are discretized using the resolutions provided within the range $-d \le \rho \le d$, $d = \sqrt{w^2 + h^2}$ and $0 \le \theta < \pi$ respectively.
+- $\rho$, $\theta$ are discretized using the resolutions provided within the range $-d \le \rho \le d$, $d = \sqrt{w^2 + h^2}$ and $0 \le \theta < \pi$ respectively.
 - An accumulator is grid is constructed by using discretized $\rho$ and $\theta$.
 - For each non zero pixel in the input image, all possible pairs of $\rho$ and $\theta$ are obtained fixing (x,y) using the equation $\rho = x cos(\theta) + y sin(\theta)$
     - For each pair the corresponding grid value in the accumulator is incremented.
