@@ -142,7 +142,7 @@ After that, the entire image is rotated by ![\theta](https://latex.codecogs.com/
 ## Identifying the vertical lines
 
 Before applying the Hough Transform, the image is blurred with a 5x5 gaussian filter and inverse thresholded.
-The grid is finer, with a ![\rho](https://latex.codecogs.com/svg.image?\rho) result of 1/4th of a pixel and a $\theta$ resolution of 1/4th of a degree.
+The grid is finer, with a ![\rho](https://latex.codecogs.com/svg.image?\rho) result of 1/4th of a pixel and a ![\theta](https://latex.codecogs.com/svg.image?\theta) resolution of 1/4th of a degree.
 To extract as many lines as feasible, the vote threshold is set low (300).
 The lines are then filtered to maintain only those with slopes near zero or 180 degrees.
 
