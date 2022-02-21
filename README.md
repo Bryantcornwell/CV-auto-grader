@@ -106,7 +106,7 @@ Hough transform algorithm is implemented from scratch to find the straight lines
 The code for HoughLines is in [houghLines.py](houghLines.py)
 
 Algorithm:
-- ![\rho](<img src="https://latex.codecogs.com/svg.image?\rho" title="\rho" />), ![\theta](<img src="https://latex.codecogs.com/svg.image?\theta" title="\theta" />)are discretized using the resolutions provided within the range $-d \le \rho \le d$, $d = \sqrt{w^2 + h^2}$ and $0 \le \theta < \pi$ respectively.
+- ![\rho](https://latex.codecogs.com/svg.image?\rho), ![\theta](https://latex.codecogs.com/svg.image?\theta)are discretized using the resolutions provided within the range $-d \le \rho \le d$, $d = \sqrt{w^2 + h^2}$ and $0 \le \theta < \pi$ respectively.
 - An accumulator is grid is constructed by using discretized $\rho$ and $\theta$.
 - For each non zero pixel in the input image, all possible pairs of $\rho$ and $\theta$ are obtained fixing (x,y) using the equation $\rho = x cos(\theta) + y sin(\theta)$
     - For each pair the corresponding grid value in the accumulator is incremented.
